@@ -1,8 +1,8 @@
 { pkgs ? import <nixpkgs> {} }: let
-  vendorSha256 = "sha256:0v99117sshxbnb6kd5vglbdq2kbh71c32g9bjgb24hbjkzns6spp";
+  vendorHash = "sha256:0v99117sshxbnb6kd5vglbdq2kbh71c32g9bjgb24hbjkzns6spp";
 
   sops-install-secrets = pkgs.callPackage ./pkgs/sops-install-secrets {
-    inherit vendorSha256;
+    inherit vendorHash;
   };
 in rec {
   sops-init-gpg-key = pkgs.callPackage ./pkgs/sops-init-gpg-key {};
@@ -20,7 +20,7 @@ in rec {
   sops-pgp-hook-test = pkgs.buildGoModule {
     name = "sops-pgp-hook-test";
     src = ./.;
-    inherit vendorSha256;
+    inherit vendorHash;
     buildPhase = ''
       go test -c ./pkgs/sops-pgp-hook
       install -D sops-pgp-hook.test $out/bin/sops-pgp-hook.test
